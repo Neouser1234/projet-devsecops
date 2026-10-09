@@ -23,10 +23,18 @@ pipeline {
             }
         }
 
-        stage('Analyse de code - SonarQube') {
+        stage('Analyse statique - Semgrep') {
+            agent {
+                label 'semgrep'
+            }
             steps {
-                echo 'Point d integration reserve au membre 2.'
-                echo 'SonarQube sera configure avec le membre responsable.'
+                echo 'Analyse statique de securite avec Semgrep.'
+                sh '''
+                    /opt/semgrep-venv/bin/semgrep scan \
+                        --config auto \
+                        --error \
+                        application
+                '''
             }
         }
 
