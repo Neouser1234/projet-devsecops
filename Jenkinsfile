@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'semgrep' }
 
     stages {
         stage('Checkout') {
