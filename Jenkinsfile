@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'semgrep' }
 
     stages {
         stage('Checkout') {
@@ -24,9 +24,6 @@ pipeline {
         }
 
         stage('Analyse statique - Semgrep') {
-            agent {
-                label 'semgrep'
-            }
             steps {
                 echo 'Analyse statique de securite avec Semgrep.'
                 sh '''
