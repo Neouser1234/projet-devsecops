@@ -24,9 +24,7 @@ pipeline {
         }
         
         stage('Analyse statique - Semgrep') {
-            agent { label 'semgrep' }
             steps {
-                checkout scm
                 echo 'Analyse statique de securite avec Semgrep.'
                 sh '/opt/semgrep-venv/bin/semgrep scan --config auto --error application'
             }
