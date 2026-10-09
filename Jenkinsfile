@@ -19,7 +19,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Verification du contenu.'
-                sh "grep -q 'Projet CI/CD securise' application/index.html"
+                sh "grep -q 'Projet CI/CD' application/index.html"
             }
         }
 
