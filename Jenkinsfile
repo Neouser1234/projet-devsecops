@@ -4,13 +4,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Le code est recupere depuis Git.'
+                echo 'Le code est recupere depuis GitHub.'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Preparation de l application.'
+                echo 'Verification des fichiers de l application.'
                 sh 'test -f application/index.html'
                 sh 'test -f application/Dockerfile'
             }
@@ -18,20 +18,29 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Verification du contenu.'
+                echo 'Verification du contenu HTML.'
                 sh "grep -q 'Projet CI/CD' application/index.html"
             }
         }
 
-        stage('Security') {
+        stage('Analyse de code - SonarQube') {
             steps {
-                echo 'Etape reservee a SonarQube et OWASP ZAP.'
+                echo 'Point d integration reserve au membre 2.'
+                echo 'SonarQube sera configure avec le membre responsable.'
+            }
+        }
+
+        stage('Tests de securite web - OWASP ZAP') {
+            steps {
+                echo 'Point d integration reserve au membre 3.'
+                echo 'OWASP ZAP sera configure lorsque l application sera accessible.'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Etape de deploiement a configurer ensuite.'
+                echo 'Point d integration reserve au membre 4.'
+                echo 'Le deploiement sera configure avec le responsable.'
             }
         }
     }
@@ -40,6 +49,7 @@ pipeline {
         success {
             echo 'Pipeline termine avec succes.'
         }
+
         failure {
             echo 'Echec du pipeline.'
         }
