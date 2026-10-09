@@ -22,7 +22,16 @@ pipeline {
                 sh "grep -q 'Projet CI/CD' application/index.html"
             }
         }
-
+        
+        stage('Analyse statique - Semgrep') {
+            agent { label 'semgrep' }
+            steps {
+                checkout scm
+                echo 'Analyse statique de securite avec Semgrep.'
+                sh '/opt/semgrep-venv/bin/semgrep scan --config auto --error application'
+            }
+        }
+        
         stage('Analyse de code - SonarQube') {
             steps {
                 echo 'Point d integration reserve au membre 2.'
