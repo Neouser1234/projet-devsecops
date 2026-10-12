@@ -74,6 +74,7 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p zap-reports
+                    docker run --rm --user root -v zap-wrk:/zap/wrk ghcr.io/zaproxy/zaproxy:stable chmod 777 /zap/wrk
                     docker rm -f zap-scan 2>/dev/null || true
                     docker run --name zap-scan --network ${NET} -v zap-wrk:/zap/wrk \
                         ghcr.io/zaproxy/zaproxy:stable \
