@@ -75,7 +75,7 @@ pipeline {
                 sh '''
                     mkdir -p zap-reports
                     docker rm -f zap-scan 2>/dev/null || true
-                    docker run --name zap-scan --network ${NET} \
+                    docker run --name zap-scan --network ${NET} -v zap-wrk:/zap/wrk \
                         ghcr.io/zaproxy/zaproxy:stable \
                         zap-baseline.py -t http://${CONTAINER}:80 -r zap-report.html -J zap-report.json -I || true
                     docker cp zap-scan:/zap/wrk/. zap-reports/
